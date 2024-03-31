@@ -8,14 +8,17 @@ namespace HW3
         {
             Console.WriteLine("a * x^2 + b * x + c = 0");
             Console.WriteLine("Введите значение a:");
-            var a = Console.ReadLine();// = int.Parse(Console.ReadLine());
+            var a = Console.ReadLine();
+            int pa;
+            Parss(a, out pa);
             Console.WriteLine("Введите значение b:");
-            var b = Console.ReadLine();// = int.Parse(Console.ReadLine());
+            var b = Console.ReadLine();
+            int pb;
+            Parss(b, out pb);
             Console.WriteLine("Введите значение c:");
-            var c = Console.ReadLine();// = int.Parse(Console.ReadLine());
-            var pa = FormatData(a);
-            var pb = FormatData(b);
-            var pc = FormatData(c);
+            var c = Console.ReadLine();
+            int pc;
+            Parss(c, out pc);
             var D = Descr(pa, pb, pc);
             if (D > 0)
             {
@@ -32,21 +35,29 @@ namespace HW3
             {
                 var x1 = (-pb + Math.Sqrt(D)) / (2 * pa);
             }
-            //static int Parss(string aa)
-            //{
-            //    var a1 = int.Parse(aa);
-            //    return a1;
-            //}
+            void Parss(string aa, out int numbers)
+            {
+                bool result = int.TryParse(aa, out int number);
+                numbers = number;
+                    if (result == true)
+                    {
+                        Console.WriteLine($"Преобразование прошло успешно. Число: {number}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Введено неверное значение. Введите повторно целое число: ");
+                        aa = Console.ReadLine();
+                        Parss(aa, out int number1);
+                        numbers = number1;
+                    }
+            }
+        }
             enum Severity
         {
             Warning,
             Error
         }
-        static int FormatData(string message, Severity severity, IDictionary data)
-        {
-            var a1 = int.Parse(aa);
-            return a1;
-        }
+        
         static int Descr(int a1, int b1, int c1)
         {
             var D = b1 * b1 - 4 * a1 * c1;
@@ -55,7 +66,6 @@ namespace HW3
         }
     }
 }
-
 
 public class NoRoots : Exception
 {
@@ -83,7 +93,5 @@ public class RootsTwo : Exception
         Console.ResetColor();
     }
     public RootsTwo(string message, Exception inner) : base(message, inner) { }
-
-}
 
 }
